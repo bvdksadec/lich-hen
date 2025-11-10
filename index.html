@@ -13,8 +13,8 @@
 
   <style>
     :root {
-      --brand: #0d6efd;
-      --brand-2: #2a8bff;
+      --brand: #0e5bce;
+      --brand-2: #0e5bce;
       --brand-light: #e4eeff;
       --bg: #f6f9ff;
       --card: #ffffffd9;
@@ -30,17 +30,17 @@
     body {
       height: 100%;
       background: var(--bg);
-      color: var(--text);
+      color: var(--text)
     }
 
     body {
-      font-family: system-ui, Roboto, Segoe UI;
+      font-family: system-ui, Roboto, Segoe UI
     }
 
     .nav-hero {
       background: linear-gradient(135deg, #064eb9, #2f77ce);
       box-shadow: 0 5px 20px #0044aa66;
-      color: #fff;
+      color: #fff
     }
 
     .app-card {
@@ -53,16 +53,22 @@
 
     .btn-pill {
       border-radius: 999px;
-      padding: 4px 10px;
+      padding: 4px 12px;
       display: inline-flex;
       align-items: center;
       gap: .45rem;
+      background: #0e5bce;
+      color: #fff
+    }
+
+    .btn {
+      border-radius: 999px
     }
 
     .btn-soft {
       background: var(--brand-light);
       border: 1px solid var(--border);
-      color: var(--brand);
+      color: var(--brand)
     }
 
     .btn-soft:hover {
@@ -70,17 +76,17 @@
     }
 
     .toolbar .form-control {
-      height: 42px;
+      height: 42px
     }
 
     input.form-control {
       border-radius: 12px;
       border: 1px solid var(--border);
-      background: #fff;
+      background: #fff
     }
 
     .search-input {
-      max-width: 340px;
+      max-width: 340px
     }
 
     .table-wrap {
@@ -88,11 +94,11 @@
       max-height: 450px;
       background: #fff;
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 14px
     }
 
     table {
-      color: var(--text);
+      color: var(--text)
     }
 
     thead th {
@@ -101,56 +107,56 @@
       z-index: 2;
       background: var(--thead) !important;
       border-bottom: 1px solid var(--thead-border) !important;
-      color: #ffffff !important;
+      color: #fff !important;
       font-weight: 700;
-      letter-spacing: .2px;
+      letter-spacing: .2px
     }
 
     tbody tr:hover {
-      background: var(--row-hover);
+      background: var(--row-hover)
     }
 
     th,
     td {
-      vertical-align: middle;
+      vertical-align: middle
     }
 
     .table td,
     .table th {
-      padding: .55rem .75rem;
+      padding: .55rem .75rem
     }
 
     td.nowrap {
-      white-space: nowrap;
+      white-space: nowrap
     }
 
     .badge-status {
       border-radius: 999px;
       padding: .35rem .6rem;
       border: 1px solid transparent;
-      font-weight: 600;
+      font-weight: 600
     }
 
     .badge-wait {
       background: #fff3d9;
       color: #9a6a00;
-      border-color: #ffdf97;
+      border-color: #ffdf97
     }
 
     .badge-ok {
       background: #e6f7ed;
       color: #0f6c3f;
-      border-color: #c6ead5;
+      border-color: #c6ead5
     }
 
     .badge-cancel {
       background: #ffeef0;
       color: #a5162a;
-      border-color: #ffd6db;
+      border-color: #ffd6db
     }
 
     .status {
-      color: var(--muted);
+      color: var(--muted)
     }
 
     .count-chip {
@@ -159,14 +165,14 @@
       color: #0a3a92;
       border: 1px solid #c9dbff;
       border-radius: 10px;
-      padding: .35rem .65rem;
+      padding: .35rem .65rem
     }
 
     .progressbar {
       height: 3px;
       background: #dce8ff;
       border-radius: 20px;
-      overflow: hidden;
+      overflow: hidden
     }
 
     .progressbar>span {
@@ -174,7 +180,7 @@
       width: 35%;
       height: 100%;
       background: linear-gradient(90deg, #6bb6ff, #0d6efd, #6bb6ff);
-      animation: indet 1.2s infinite linear;
+      animation: indet 1.2s infinite linear
     }
 
     @keyframes indet {
@@ -195,7 +201,90 @@
       padding: 10px 14px;
       border-top: 1px solid var(--border);
       background: #fafcffb8;
-      border-radius: 12px;
+      border-radius: 12px
+    }
+
+    /* ===== Toolbar phải: 4 item trên cùng một dòng (kể cả mobile) ===== */
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    @media (max-width:576px) {
+      .toolbar-right {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap
+      }
+
+      .toolbar-right .btn {
+        padding: 8px 10px
+      }
+
+      .toolbar-right .btn .btn-text {
+        display: none
+      }
+
+      /* chỉ icon trên mobile */
+      .toolbar-right .count-chip {
+        flex: 0 0 auto
+      }
+    }
+
+    /* ===== Table -> Card dọc trên mobile ===== */
+    /* giữ bình thường trên desktop */
+    .table-responsive-cards thead {
+      display: table-header-group
+    }
+
+    @media (max-width:768px) {
+      .table-responsive-cards thead {
+        display: none
+      }
+
+      .table-responsive-cards tbody {
+        display: block
+      }
+
+      .table-responsive-cards tbody tr {
+        display: block;
+        margin: 10px 10px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .04)
+      }
+
+      .table-responsive-cards tbody tr:nth-child(even) {
+        background: #fff
+      }
+
+      .table-responsive-cards tbody td {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 8px;
+        padding: .6rem .75rem;
+        border: 0 !important
+      }
+
+      .table-responsive-cards tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #0a2a66
+      }
+
+      /* Hành động cùng hàng với label */
+      .table-responsive-cards tbody td.actions {
+        grid-template-columns: 120px auto;
+        align-items: center
+      }
+
+      .table-responsive-cards tbody td.actions .btn {
+        width: auto;
+        display: inline-flex;
+        justify-content: center
+      }
     }
   </style>
 </head>
@@ -205,7 +294,7 @@
   <div class="nav-hero py-2">
     <div class="container-xl d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center gap-2">
-        <img src="./LOGO-SD.png" width="40" style="border-radius: 4px;" alt="">
+        <img src="./LOGO-SD.png" width="40" style="border-radius:4px" alt="">
         <div class="fw-semibold fs-5">Danh sách đặt lịch online</div>
       </div>
       <span class="badge bg-light text-primary fw-normal p-2">
@@ -217,7 +306,7 @@
   <div class="container-xl my-4">
     <div class="app-card p-3 p-md-4">
       <!-- Toolbar -->
-      <div class="d-flex flex-column flex-lg-row align-items-lg-center" style="gap:12px">
+      <div class="d-flex flex-column flex-lg-row align-items-lg-center toolbar" style="gap:12px">
         <div class="d-flex align-items-center gap-2">
           <span class="text-secondary"><i class="bi bi-calendar-date fs-5 text-primary"></i></span>
           <input id="dateInput" type="date" class="form-control" style="width:220px">
@@ -230,15 +319,21 @@
           </div>
         </div>
 
-        <div class="ms-lg-auto d-flex gap-2 mt-2 mt-lg-0">
-          <button id="btnFetch" class="btn btn-primary btn-pill"><i class="bi bi-download"></i> Lấy dữ liệu</button>
-          <button id="btnCsv" class="btn btn-soft btn-pill" disabled><i class="bi bi-file-earmark-spreadsheet"></i> Tải
-            CSV</button>
-        </div>
+        <!-- 4 mục cùng một dòng -->
+        <div class="ms-lg-auto d-flex align-items-center gap-2 mt-2 mt-lg-0 toolbar-right">
+          <button id="btnFetch" class="btn btn-pill">
+            <i class="bi bi-download"></i><span class="btn-text"> Lấy dữ liệu</span>
+          </button>
+          <button id="btnCsv" class="btn btn-soft btn-pill" disabled>
+            <i class="bi bi-file-earmark-spreadsheet"></i><span class="btn-text"> Tải CSV</span>
+          </button>
 
-        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0 ms-lg-3">
-          <span class="status small"><i class="bi bi-activity me-1"></i><span id="statusText">Sẵn sàng</span></span>
-          <span class="count-chip"><i class="bi bi-table me-1"></i><span id="countRows">0</span> dòng</span>
+          <span class="status small">
+            <i class="bi bi-activity me-1"></i><span id="statusText">Sẵn sàng</span>
+          </span>
+          <span class="count-chip">
+            <i class="bi bi-table me-1"></i><span id="countRows">0</span> dòng
+          </span>
         </div>
       </div>
 
@@ -246,7 +341,7 @@
 
       <!-- Table -->
       <div class="table-wrap mt-3">
-        <table class="table table-sm table-striped align-middle mb-0">
+        <table class="table table-sm table-striped align-middle mb-0 table-responsive-cards">
           <thead id="thead"></thead>
           <tbody id="tbody"></tbody>
         </table>
@@ -294,15 +389,14 @@
     window.addEventListener("DOMContentLoaded", () => btnFetch.click());
 
     /* ===== Helpers ===== */
-    function setLoading(on) { progress.classList.toggle("d-none", !on); statusText.textContent = on ? "Đang tải…" : "Sẵn sàng"; }
-    function showEmpty(show) { emptyEl.classList.toggle("d-none", !show); }
-    function autoColumns(rows) { const k = new Set(); rows.forEach(r => Object.keys(r || {}).forEach(x => k.add(x))); return [...k]; }
+    function setLoading(on) { progress.classList.toggle("d-none", !on); statusText.textContent = on ? "Đang tải…" : "Sẵn sàng" }
+    function showEmpty(show) { emptyEl.classList.toggle("d-none", !show) }
+    function autoColumns(rows) { const k = new Set(); rows.forEach(r => Object.keys(r || {}).forEach(x => k.add(x))); return [...k] }
     function toVNDate(s) {
       if (!s) return "";
       try {
-        // chấp nhận Date string ISO, dd/MM/yyyy, yyyy-MM-dd
-        if (/^\d{4}-\d{2}-\d{2}T/.test(s)) { const d = new Date(s); if (!isNaN(d)) return d.toLocaleDateString("vi-VN"); }
-        if (/^\d{4}-\d{2}-\d{2}$/.test(s)) { const [y, m, d] = s.split("-"); return [d, m, y].join("/"); }
+        if (/^\d{4}-\d{2}-\d{2}T/.test(s)) { const d = new Date(s); if (!isNaN(d)) return d.toLocaleDateString("vi-VN") }
+        if (/^\d{4}-\d{2}-\d{2}$/.test(s)) { const [y, m, d] = s.split("-"); return [d, m, y].join("/") }
         if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)) return s;
         const d = new Date(s); if (!isNaN(d)) return d.toLocaleDateString("vi-VN");
       } catch (_) { }
@@ -310,11 +404,9 @@
     }
 
     const COL_LABELS = {
-      // UserID: "Tài khoản",  // bỏ
       MaThe: "Mã thẻ",
       HoTen: "Họ tên",
       NgaySinh: "Ngày sinh",
-      // Quay:"Quầy",          // bỏ
       SoTT: "Số TT",
       Ngay: "Ngày",
       TrangThai: "Trạng thái"
@@ -330,10 +422,8 @@
 
     /* ===== API ===== */
     async function apiGet(url, params) {
-      const u = new URL(url);
-      Object.entries(params).forEach(([k, v]) => u.searchParams.set(k, v));
-      const res = await fetch(u.toString(), { method: "GET" });
-      if (!res.ok) throw new Error("HTTP " + res.status);
+      const u = new URL(url); Object.entries(params).forEach(([k, v]) => u.searchParams.set(k, v));
+      const res = await fetch(u.toString(), { method: "GET" }); if (!res.ok) throw new Error("HTTP " + res.status);
       return res.json();
     }
     async function apiPostForm(url, params) {
@@ -342,11 +432,9 @@
       if (!res.ok) throw new Error("HTTP " + res.status);
       return res.json();
     }
-    async function fetchData(ngay) {
-      return apiGet(BASE_URL, { action: "listDay", ngay, api_key: API_KEY });
-    }
+    async function fetchData(ngay) { return apiGet(BASE_URL, { action: "listDay", ngay, api_key: API_KEY }) }
     async function updateStatusPOST(maThe, ngay, trangThai) {
-      return apiPostForm(BASE_URL, { api_key: API_KEY, action: "updateStatus", maThe: String(maThe), ngay, trangThai: String(trangThai) });
+      return apiPostForm(BASE_URL, { api_key: API_KEY, action: "updateStatus", maThe: String(maThe), ngay, trangThai: String(trangThai) })
     }
 
     /* ===== Render ===== */
@@ -356,9 +444,8 @@
       showEmpty(false);
 
       const cols = autoColumns(rows);
-      // chỉ giữ các cột mong muốn (đã bỏ UserID, Quay)
-      const order = ["MaThe", "HoTen", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
-      const finalCols = order.filter(c => cols.includes(c)); // không thêm cột thừa
+      const order = ["MaThe", "HoTen", "NgaySinh", "SoTT", "Ngay", "TrangThai"]; // bỏ UserID, Quay
+      const finalCols = order.filter(c => cols.includes(c));
 
       // thead
       const trh = document.createElement("tr");
@@ -370,10 +457,14 @@
       // tbody
       rows.forEach((r, i) => {
         const tr = document.createElement("tr");
-        const tdIndex = document.createElement("td"); tdIndex.textContent = i + 1; tr.appendChild(tdIndex);
+
+        const tdIndex = document.createElement("td");
+        tdIndex.textContent = i + 1; tdIndex.setAttribute("data-label", "#");
+        tr.appendChild(tdIndex);
 
         finalCols.forEach(c => {
           const td = document.createElement("td");
+          td.setAttribute("data-label", COL_LABELS[c] || c);
           if (c === "TrangThai") td.innerHTML = statusBadge(r[c]);
           else if (c === "NgaySinh" || c === "Ngay") td.innerHTML = `<span class="nowrap">${toVNDate(r[c])}</span>`;
           else td.textContent = r[c] ?? "";
@@ -381,10 +472,12 @@
         });
 
         const tdAct = document.createElement("td");
+        tdAct.className = "actions";
+        tdAct.setAttribute("data-label", "Hành động");
         if (Number(r.TrangThai) === 1) {
           const btn = document.createElement("button");
-          btn.className = "btn btn-success btn-sm btn-pill";
-          btn.innerHTML = `<i class="bi bi-check2-square"></i> Xác nhận`;
+          btn.className = "btn btn-success btn-sm";
+          btn.innerHTML = `<i class="bi bi-check2-square"></i> <span class="btn-text">Xác nhận</span>`;
           btn.onclick = () => confirmRow(r, tr);
           tdAct.appendChild(btn);
         } else {
@@ -400,7 +493,7 @@
     }
 
     /* ===== Search (chỉ Họ tên + Mã thẻ) ===== */
-    function normalizeVN(s) { return (s || "").toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+    function normalizeVN(s) { return (s || "").toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() }
     function applySearch() {
       const q = normalizeVN(searchInput.value.trim());
       if (!q) { viewRows = fullRows.slice(); renderTable(viewRows); return; }
@@ -411,13 +504,12 @@
       });
       renderTable(viewRows);
     }
-    function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+    function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms) } }
     const onSearchDebounced = debounce(applySearch, 150);
 
     /* ===== Actions ===== */
     async function confirmRow(row, trEl) {
-      const ok = confirm(`Xác nhận Số TT ${row.SoTT} (Mã thẻ ${row.MaThe})?`);
-      if (!ok) return;
+      const ok = confirm(`Xác nhận Số TT ${row.SoTT} (Mã thẻ ${row.MaThe})?`); if (!ok) return;
 
       const headers = [...document.querySelectorAll("#thead th")].map(th => th.textContent.trim());
       const idxTrangThai = headers.findIndex(h => h === "Trạng thái");
@@ -438,11 +530,10 @@
         if (idxTrangThai > -1) cells[idxTrangThai].innerHTML = statusBadge(old);
         if (Number(old) === 1) {
           const btn = document.createElement("button");
-          btn.className = "btn btn-success btn-sm btn-pill";
-          btn.innerHTML = `<i class="bi bi-check2-square"></i> Xác nhận`;
+          btn.className = "btn btn-success btn-sm";
+          btn.innerHTML = `<i class="bi bi-check2-square"></i> <span class="btn-text">Xác nhận</span>`;
           btn.onclick = () => confirmRow(row, trEl);
-          cells[cells.length - 1].innerHTML = "";
-          cells[cells.length - 1].appendChild(btn);
+          cells[cells.length - 1].innerHTML = ""; cells[cells.length - 1].appendChild(btn);
         } else {
           cells[cells.length - 1].innerHTML = `<span class="text-secondary">—</span>`;
         }
@@ -452,8 +543,7 @@
 
     /* ===== Events ===== */
     btnFetch.onclick = async () => {
-      const ngay = dateInput.value;
-      if (!ngay) return alert("Chọn ngày");
+      const ngay = dateInput.value; if (!ngay) return alert("Chọn ngày");
       setLoading(true);
       try {
         const json = await fetchData(ngay);
@@ -467,39 +557,32 @@
         renderTable(viewRows);
         statusText.textContent = "Lỗi";
         alert("Không lấy được dữ liệu: " + (e.message || e));
-      } finally { setLoading(false); }
+      } finally { setLoading(false) }
     };
     searchInput.addEventListener("input", onSearchDebounced);
 
     btnCsv.onclick = () => {
       if (!viewRows.length) return;
       const cols = autoColumns(viewRows);
-      const order = ["MaThe", "HoTen", "NgaySinh", "SoTT", "Ngay", "TrangThai"]; // không có UserID, Quay
+      const order = ["MaThe", "HoTen", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
       const finalCols = order.filter(c => cols.includes(c));
-
-      const esc = s => { s = s == null ? "" : String(s); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+      const esc = s => { s = s == null ? "" : String(s); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s };
       const head = ["STT", ...finalCols.map(c => COL_LABELS[c] || c)].join(",");
-
       const body = viewRows.map((r, i) => {
         const values = finalCols.map(c => {
-          if (c === "TrangThai") { const x = Number(r[c]); return x === 0 ? "Đã hủy" : x === 1 ? "Chờ xác nhận" : x === 2 ? "Đã xác nhận" : ""; }
+          if (c === "TrangThai") { const x = Number(r[c]); return x === 0 ? "Đã hủy" : x === 1 ? "Chờ xác nhận" : x === 2 ? "Đã xác nhận" : "" }
           if (c === "NgaySinh" || c === "Ngay") return toVNDate(r[c]);
           return r[c];
         });
         return [i + 1, ...values.map(esc)].join(",");
       }).join("\n");
-
       const blob = new Blob(["\uFEFF" + head + "\n" + body], { type: "text/csv;charset=utf-8" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = `data_${dateInput.value}.csv`;
-      a.click();
+      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `data_${dateInput.value}.csv`; a.click();
     };
 
     btnTop.onclick = () => document.querySelector(".table-wrap").scrollTo({ top: 0, behavior: "smooth" });
-    btnBottom.onclick = () => { const w = document.querySelector(".table-wrap"); w.scrollTo({ top: w.scrollHeight, behavior: "smooth" }); };
+    btnBottom.onclick = () => { const w = document.querySelector(".table-wrap"); w.scrollTo({ top: w.scrollHeight, behavior: "smooth" }) };
   </script>
 </body>
-
 
 </html>
