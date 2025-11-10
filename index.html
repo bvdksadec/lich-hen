@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8">
+  <title>Bvđk Sa Đéc</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="./assets/LOGO-SD.ico">
+
+  <!-- Bootstrap + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand: #0d6efd;
+      --brand-2: #2a8bff;
+      --brand-light: #e4eeff;
+      --bg: #f6f9ff;
+      --card: #ffffffd9;
+      --border: #d7e3f4;
+      --text: #12263a;
+      --muted: #6b7a90;
+      --thead: #0e5bce;
+      --thead-border: #c6d6f3;
+      --row-hover: #eef5ff;
+    }
+
+    html,
+    body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body {
+      font-family: system-ui, Roboto, Segoe UI;
+    }
+
+    .nav-hero {
+      background: linear-gradient(135deg, #064eb9, #2f77ce);
+      box-shadow: 0 5px 20px #0044aa66;
+      color: #fff;
+    }
+
+    .app-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 28px rgb(0 0 0 / 0.08);
+    }
+
+    .btn-pill {
+      border-radius: 999px;
+      padding: 4px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+    }
+
+    .btn-soft {
+      background: var(--brand-light);
+      border: 1px solid var(--border);
+      color: var(--brand);
+    }
+
+    .btn-soft:hover {
+      background: #d6e7ff
+    }
+
+    .toolbar .form-control {
+      height: 42px;
+    }
+
+    input.form-control {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .search-input {
+      max-width: 340px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      max-height: 450px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    table {
+      color: var(--text);
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: var(--thead) !important;
+      border-bottom: 1px solid var(--thead-border) !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+
+    tbody tr:hover {
+      background: var(--row-hover);
+    }
+
+    th,
+    td {
+      vertical-align: middle;
+    }
+
+    .table td,
+    .table th {
+      padding: .55rem .75rem;
+    }
+
+    td.nowrap {
+      white-space: nowrap;
+    }
+
+    .badge-status {
+      border-radius: 999px;
+      padding: .35rem .6rem;
+      border: 1px solid transparent;
+      font-weight: 600;
+    }
+
+    .badge-wait {
+      background: #fff3d9;
+      color: #9a6a00;
+      border-color: #ffdf97;
+    }
+
+    .badge-ok {
+      background: #e6f7ed;
+      color: #0f6c3f;
+      border-color: #c6ead5;
+    }
+
+    .badge-cancel {
+      background: #ffeef0;
+      color: #a5162a;
+      border-color: #ffd6db;
+    }
+
+    .status {
+      color: var(--muted);
+    }
+
+    .count-chip {
+      font-variant-numeric: tabular-nums;
+      background: #eef5ff;
+      color: #0a3a92;
+      border: 1px solid #c9dbff;
+      border-radius: 10px;
+      padding: .35rem .65rem;
+    }
+
+    .progressbar {
+      height: 3px;
+      background: #dce8ff;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progressbar>span {
+      display: block;
+      width: 35%;
+      height: 100%;
+      background: linear-gradient(90deg, #6bb6ff, #0d6efd, #6bb6ff);
+      animation: indet 1.2s infinite linear;
+    }
+
+    @keyframes indet {
+      0% {
+        margin-left: -35%
+      }
+
+      100% {
+        margin-left: 100%
+      }
+    }
+
+    .footerbar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-top: 1px solid var(--border);
+      background: #fafcffb8;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <div class="nav-hero py-2">
+    <div class="container-xl d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-2">
+        <img src="./assets/LOGO-SD.png" width="40" style="border-radius: 4px;" alt="">
+        <div class="fw-semibold fs-5">Danh sách đặt lịch online</div>
+      </div>
+      <span class="badge bg-light text-primary fw-normal p-2">
+        <i class="bi bi-shield-check fs-5"></i>
+      </span>
+    </div>
+  </div>
+
+  <div class="container-xl my-4">
+    <div class="app-card p-3 p-md-4">
+      <!-- Toolbar -->
+      <div class="d-flex flex-column flex-lg-row align-items-lg-center" style="gap:12px">
+        <div class="d-flex align-items-center gap-2">
+          <span class="text-secondary"><i class="bi bi-calendar-date fs-5 text-primary"></i></span>
+          <input id="dateInput" type="date" class="form-control" style="width:220px">
+        </div>
+
+        <div class="ms-lg-3 flex-grow-1">
+          <div class="input-group search-input mt-2 mt-lg-0">
+            <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+            <input id="searchInput" type="text" class="form-control" placeholder="Tìm theo tên hoặc mã thẻ...">
+          </div>
+        </div>
+
+        <div class="ms-lg-auto d-flex gap-2 mt-2 mt-lg-0">
+          <button id="btnFetch" class="btn btn-primary btn-pill"><i class="bi bi-download"></i> Lấy dữ liệu</button>
+          <button id="btnCsv" class="btn btn-soft btn-pill" disabled><i class="bi bi-file-earmark-spreadsheet"></i> Tải
+            CSV</button>
+        </div>
+
+        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0 ms-lg-3">
+          <span class="status small"><i class="bi bi-activity me-1"></i><span id="statusText">Sẵn sàng</span></span>
+          <span class="count-chip"><i class="bi bi-table me-1"></i><span id="countRows">0</span> dòng</span>
+        </div>
+      </div>
+
+      <div id="progress" class="progressbar mt-3 d-none"><span></span></div>
+
+      <!-- Table -->
+      <div class="table-wrap mt-3">
+        <table class="table table-sm table-striped align-middle mb-0">
+          <thead id="thead"></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div id="empty" class="text-center text-secondary py-4 d-none">📂 Chưa có dữ liệu cho ngày đã chọn.</div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footerbar mt-3">
+        <div class="small text-secondary"><i class="bi bi-info-circle me-1"></i>Bấm “Xác nhận” với dòng trạng thái
+          <b>Chờ xác nhận</b>.
+        </div>
+        <div class="d-flex gap-2">
+          <button id="btnTop" class="btn btn-soft btn-sm btn-pill"><i class="bi bi-arrow-up"></i> Lên đầu</button>
+          <button id="btnBottom" class="btn btn-soft btn-sm btn-pill"><i class="bi bi-arrow-down"></i> Cuối
+            bảng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ==== GIẤU TRONG CODE ==== */
+    const BASE_URL = "https://script.google.com/macros/s/AKfycbz4_qewFk9wT9XCFOgE87VEABMPEMbgDxmf_sIEYpY4sFrftVxtJaY-sdZ8tWqFTZaxeA/exec";
+    const API_KEY = "BVDKSD@2025";
+    /* ========================= */
+
+    const dateInput = document.getElementById("dateInput");
+    const searchInput = document.getElementById("searchInput");
+    const btnFetch = document.getElementById("btnFetch");
+    const btnCsv = document.getElementById("btnCsv");
+    const theadEl = document.getElementById("thead");
+    const tbodyEl = document.getElementById("tbody");
+    const statusText = document.getElementById("statusText");
+    const countRows = document.getElementById("countRows");
+    const progress = document.getElementById("progress");
+    const emptyEl = document.getElementById("empty");
+    const btnTop = document.getElementById("btnTop");
+    const btnBottom = document.getElementById("btnBottom");
+
+    let fullRows = [];
+    let viewRows = [];
+
+    // hôm nay + tự fetch khi mở
+    dateInput.value = new Date().toISOString().slice(0, 10);
+    window.addEventListener("DOMContentLoaded", () => btnFetch.click());
+
+    /* ===== Helpers ===== */
+    function setLoading(on) { progress.classList.toggle("d-none", !on); statusText.textContent = on ? "Đang tải…" : "Sẵn sàng"; }
+    function showEmpty(show) { emptyEl.classList.toggle("d-none", !show); }
+    function autoColumns(rows) { const k = new Set(); rows.forEach(r => Object.keys(r || {}).forEach(x => k.add(x))); return [...k]; }
+    function toVNDate(s) {
+      if (!s) return "";
+      try {
+        // chấp nhận Date string ISO, dd/MM/yyyy, yyyy-MM-dd
+        if (/^\d{4}-\d{2}-\d{2}T/.test(s)) { const d = new Date(s); if (!isNaN(d)) return d.toLocaleDateString("vi-VN"); }
+        if (/^\d{4}-\d{2}-\d{2}$/.test(s)) { const [y, m, d] = s.split("-"); return [d, m, y].join("/"); }
+        if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)) return s;
+        const d = new Date(s); if (!isNaN(d)) return d.toLocaleDateString("vi-VN");
+      } catch (_) { }
+      return String(s);
+    }
+
+    const COL_LABELS = {
+      // UserID: "Tài khoản",  // bỏ
+      MaThe: "Mã thẻ",
+      HoTen: "Họ tên",
+      NgaySinh: "Ngày sinh",
+      // Quay:"Quầy",          // bỏ
+      SoTT: "Số TT",
+      Ngay: "Ngày",
+      TrangThai: "Trạng thái"
+    };
+
+    function statusBadge(v) {
+      const x = Number(v);
+      if (x === 0) return `<span class="badge-status badge-cancel"><i class="bi bi-x-circle me-1"></i>Đã hủy</span>`;
+      if (x === 1) return `<span class="badge-status badge-wait"><i class="bi bi-hourglass-split me-1"></i>Chờ xác nhận</span>`;
+      if (x === 2) return `<span class="badge-status badge-ok"><i class="bi bi-check-circle me-1"></i>Đã xác nhận</span>`;
+      return `<span class="badge bg-secondary">N/A</span>`;
+    }
+
+    /* ===== API ===== */
+    async function apiGet(url, params) {
+      const u = new URL(url);
+      Object.entries(params).forEach(([k, v]) => u.searchParams.set(k, v));
+      const res = await fetch(u.toString(), { method: "GET" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    }
+    async function apiPostForm(url, params) {
+      const body = new URLSearchParams(params);
+      const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    }
+    async function fetchData(ngay) {
+      return apiGet(BASE_URL, { action: "listDay", ngay, api_key: API_KEY });
+    }
+    async function updateStatusPOST(maThe, ngay, trangThai) {
+      return apiPostForm(BASE_URL, { api_key: API_KEY, action: "updateStatus", maThe: String(maThe), ngay, trangThai: String(trangThai) });
+    }
+
+    /* ===== Render ===== */
+    function renderTable(rows) {
+      theadEl.innerHTML = ""; tbodyEl.innerHTML = "";
+      if (!rows.length) { btnCsv.disabled = true; countRows.textContent = "0"; showEmpty(true); return; }
+      showEmpty(false);
+
+      const cols = autoColumns(rows);
+      // chỉ giữ các cột mong muốn (đã bỏ UserID, Quay)
+      const order = ["MaThe", "HoTen", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
+      const finalCols = order.filter(c => cols.includes(c)); // không thêm cột thừa
+
+      // thead
+      const trh = document.createElement("tr");
+      const thIdx = document.createElement("th"); thIdx.textContent = "#"; trh.appendChild(thIdx);
+      finalCols.forEach(c => { const th = document.createElement("th"); th.textContent = COL_LABELS[c] || c; trh.appendChild(th); });
+      const thAct = document.createElement("th"); thAct.textContent = "Hành động"; trh.appendChild(thAct);
+      theadEl.appendChild(trh);
+
+      // tbody
+      rows.forEach((r, i) => {
+        const tr = document.createElement("tr");
+        const tdIndex = document.createElement("td"); tdIndex.textContent = i + 1; tr.appendChild(tdIndex);
+
+        finalCols.forEach(c => {
+          const td = document.createElement("td");
+          if (c === "TrangThai") td.innerHTML = statusBadge(r[c]);
+          else if (c === "NgaySinh" || c === "Ngay") td.innerHTML = `<span class="nowrap">${toVNDate(r[c])}</span>`;
+          else td.textContent = r[c] ?? "";
+          tr.appendChild(td);
+        });
+
+        const tdAct = document.createElement("td");
+        if (Number(r.TrangThai) === 1) {
+          const btn = document.createElement("button");
+          btn.className = "btn btn-success btn-sm btn-pill";
+          btn.innerHTML = `<i class="bi bi-check2-square"></i> Xác nhận`;
+          btn.onclick = () => confirmRow(r, tr);
+          tdAct.appendChild(btn);
+        } else {
+          tdAct.innerHTML = `<span class="text-secondary">—</span>`;
+        }
+        tr.appendChild(tdAct);
+
+        tbodyEl.appendChild(tr);
+      });
+
+      btnCsv.disabled = false;
+      countRows.textContent = rows.length.toLocaleString("vi-VN");
+    }
+
+    /* ===== Search (chỉ Họ tên + Mã thẻ) ===== */
+    function normalizeVN(s) { return (s || "").toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+    function applySearch() {
+      const q = normalizeVN(searchInput.value.trim());
+      if (!q) { viewRows = fullRows.slice(); renderTable(viewRows); return; }
+      viewRows = fullRows.filter(r => {
+        const name = normalizeVN(r.HoTen);
+        const card = normalizeVN(r.MaThe);
+        return name.includes(q) || card.includes(q);
+      });
+      renderTable(viewRows);
+    }
+    function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+    const onSearchDebounced = debounce(applySearch, 150);
+
+    /* ===== Actions ===== */
+    async function confirmRow(row, trEl) {
+      const ok = confirm(`Xác nhận Số TT ${row.SoTT} (Mã thẻ ${row.MaThe})?`);
+      if (!ok) return;
+
+      const headers = [...document.querySelectorAll("#thead th")].map(th => th.textContent.trim());
+      const idxTrangThai = headers.findIndex(h => h === "Trạng thái");
+      const cells = trEl.querySelectorAll("td");
+
+      const old = row.TrangThai;
+      row.TrangThai = 2;
+      if (idxTrangThai > -1) cells[idxTrangThai].innerHTML = statusBadge(2);
+      cells[cells.length - 1].innerHTML = `<span class="text-secondary">—</span>`;
+
+      try {
+        const resp = await updateStatusPOST(row.MaThe, dateInput.value, 2);
+        if (!resp?.ok) throw new Error(resp?.error || resp?.error_code || "Update failed");
+        const idx = fullRows.findIndex(x => x.MaThe === row.MaThe && x.Ngay === row.Ngay);
+        if (idx > -1) fullRows[idx].TrangThai = 2;
+      } catch (e) {
+        row.TrangThai = old;
+        if (idxTrangThai > -1) cells[idxTrangThai].innerHTML = statusBadge(old);
+        if (Number(old) === 1) {
+          const btn = document.createElement("button");
+          btn.className = "btn btn-success btn-sm btn-pill";
+          btn.innerHTML = `<i class="bi bi-check2-square"></i> Xác nhận`;
+          btn.onclick = () => confirmRow(row, trEl);
+          cells[cells.length - 1].innerHTML = "";
+          cells[cells.length - 1].appendChild(btn);
+        } else {
+          cells[cells.length - 1].innerHTML = `<span class="text-secondary">—</span>`;
+        }
+        alert("Cập nhật thất bại: " + (e.message || e));
+      }
+    }
+
+    /* ===== Events ===== */
+    btnFetch.onclick = async () => {
+      const ngay = dateInput.value;
+      if (!ngay) return alert("Chọn ngày");
+      setLoading(true);
+      try {
+        const json = await fetchData(ngay);
+        fullRows = Array.isArray(json?.data) ? json.data : [];
+        viewRows = fullRows.slice();
+        renderTable(viewRows);
+        statusText.textContent = "Hoàn tất ✓";
+        applySearch();
+      } catch (e) {
+        fullRows = []; viewRows = [];
+        renderTable(viewRows);
+        statusText.textContent = "Lỗi";
+        alert("Không lấy được dữ liệu: " + (e.message || e));
+      } finally { setLoading(false); }
+    };
+    searchInput.addEventListener("input", onSearchDebounced);
+
+    btnCsv.onclick = () => {
+      if (!viewRows.length) return;
+      const cols = autoColumns(viewRows);
+      const order = ["MaThe", "HoTen", "NgaySinh", "SoTT", "Ngay", "TrangThai"]; // không có UserID, Quay
+      const finalCols = order.filter(c => cols.includes(c));
+
+      const esc = s => { s = s == null ? "" : String(s); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+      const head = ["STT", ...finalCols.map(c => COL_LABELS[c] || c)].join(",");
+
+      const body = viewRows.map((r, i) => {
+        const values = finalCols.map(c => {
+          if (c === "TrangThai") { const x = Number(r[c]); return x === 0 ? "Đã hủy" : x === 1 ? "Chờ xác nhận" : x === 2 ? "Đã xác nhận" : ""; }
+          if (c === "NgaySinh" || c === "Ngay") return toVNDate(r[c]);
+          return r[c];
+        });
+        return [i + 1, ...values.map(esc)].join(",");
+      }).join("\n");
+
+      const blob = new Blob(["\uFEFF" + head + "\n" + body], { type: "text/csv;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `data_${dateInput.value}.csv`;
+      a.click();
+    };
+
+    btnTop.onclick = () => document.querySelector(".table-wrap").scrollTo({ top: 0, behavior: "smooth" });
+    btnBottom.onclick = () => { const w = document.querySelector(".table-wrap"); w.scrollTo({ top: w.scrollHeight, behavior: "smooth" }); };
+  </script>
+</body>
+
+</html>
