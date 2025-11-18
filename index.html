@@ -226,14 +226,12 @@
         display: none
       }
 
-      /* chỉ icon trên mobile */
       .toolbar-right .count-chip {
         flex: 0 0 auto
       }
     }
 
     /* ===== Table -> Card dọc trên mobile ===== */
-    /* giữ bình thường trên desktop */
     .table-responsive-cards thead {
       display: table-header-group
     }
@@ -274,7 +272,6 @@
         color: #0a2a66
       }
 
-      /* Hành động cùng hàng với label */
       .table-responsive-cards tbody td.actions {
         grid-template-columns: 120px auto;
         align-items: center
@@ -363,10 +360,10 @@
   </div>
 
   <script>
-    /* ==== GIẤU TRONG CODE ==== */
-    const BASE_URL = "https://script.google.com/macros/s/AKfycbz4_qewFk9wT9XCFOgE87VEABMPEMbgDxmf_sIEYpY4sFrftVxtJaY-sdZ8tWqFTZaxeA/exec";
-    const API_KEY = "BVDKSD@2025";
-    /* ========================= */
+    /* ==== CẤU HÌNH API LARAVEL ==== */
+    const API_BASE = "https://quoc.shop/public/api";
+    const SECRET_KEY = "BVDKSADEC@2025";
+    /* ============================== */
 
     const dateInput = document.getElementById("dateInput");
     const searchInput = document.getElementById("searchInput");
@@ -389,16 +386,30 @@
     window.addEventListener("DOMContentLoaded", () => btnFetch.click());
 
     /* ===== Helpers ===== */
-    function setLoading(on) { progress.classList.toggle("d-none", !on); statusText.textContent = on ? "Đang tải…" : "Sẵn sàng" }
-    function showEmpty(show) { emptyEl.classList.toggle("d-none", !show) }
-    function autoColumns(rows) { const k = new Set(); rows.forEach(r => Object.keys(r || {}).forEach(x => k.add(x))); return [...k] }
+    function setLoading(on) {
+      progress.classList.toggle("d-none", !on);
+      statusText.textContent = on ? "Đang tải…" : "Sẵn sàng";
+    }
+    function showEmpty(show) { emptyEl.classList.toggle("d-none", !show); }
+    function autoColumns(rows) {
+      const k = new Set();
+      rows.forEach(r => Object.keys(r || {}).forEach(x => k.add(x)));
+      return [...k];
+    }
     function toVNDate(s) {
       if (!s) return "";
       try {
-        if (/^\d{4}-\d{2}-\d{2}T/.test(s)) { const d = new Date(s); if (!isNaN(d)) return d.toLocaleDateString("vi-VN") }
-        if (/^\d{4}-\d{2}-\d{2}$/.test(s)) { const [y, m, d] = s.split("-"); return [d, m, y].join("/") }
+        if (/^\d{4}-\d{2}-\d{2}T/.test(s)) {
+          const d = new Date(s);
+          if (!isNaN(d)) return d.toLocaleDateString("vi-VN");
+        }
+        if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+          const [y, m, d] = s.split("-");
+          return [d, m, y].join("/");
+        }
         if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)) return s;
-        const d = new Date(s); if (!isNaN(d)) return d.toLocaleDateString("vi-VN");
+        const d = new Date(s);
+        if (!isNaN(d)) return d.toLocaleDateString("vi-VN");
       } catch (_) { }
       return String(s);
     }
@@ -420,54 +431,107 @@
       return `<span class="badge bg-secondary">N/A</span>`;
     }
 
-    /* ===== API ===== */
-    async function apiGet(url, params) {
-      const u = new URL(url); Object.entries(params).forEach(([k, v]) => u.searchParams.set(k, v));
-      const res = await fetch(u.toString(), { method: "GET" }); if (!res.ok) throw new Error("HTTP " + res.status);
-      return res.json();
-    }
-    async function apiPostForm(url, params) {
-      const body = new URLSearchParams(params);
-      const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body });
+    /* ===== API LARAVEL ===== */
+    async function apiGet(url) {
+      const res = await fetch(url, {
+        method: "GET",
+        headers: {
+          "X-SECRET-KEY": SECRET_KEY,
+          "Accept": "application/json"
+        }
+      });
       if (!res.ok) throw new Error("HTTP " + res.status);
       return res.json();
     }
-    async function fetchData(ngay) { return apiGet(BASE_URL, { action: "listDay", ngay, api_key: API_KEY }) }
-    async function updateStatusPOST(maThe, ngay, trangThai) {
-      return apiPostForm(BASE_URL, { api_key: API_KEY, action: "updateStatus", maThe: String(maThe), ngay, trangThai: String(trangThai) })
+
+    async function apiPatch(url, payload) {
+      const res = await fetch(url, {
+        method: "PATCH",
+        headers: {
+          "X-SECRET-KEY": SECRET_KEY,
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload || {})
+      });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    }
+
+    // GET /dat-lich/ngay/{ngay_dat}
+    async function fetchData(ngay) {
+      // ngay dạng YYYY-MM-DD từ input date
+      const url = `${API_BASE}/dat-lich/ngay/${encodeURIComponent(ngay)}`;
+      return apiGet(url);
+    }
+
+    // PATCH /dat-lich/{id}/status
+    async function updateStatusPATCH(id, trangThai) {
+      const url = `${API_BASE}/dat-lich/${id}/status`;
+      return apiPatch(url, { trang_thai: trangThai });
+    }
+
+    // Map record Laravel -> object UI
+    function mapRecordToRow(rec) {
+      return {
+        _id: rec.id,                             // dùng cho PATCH
+        MaThe: rec.ma_the || "",
+        HoTen: rec.ho_ten || "",
+        NgaySinh: rec.ngay_sinh || "",
+        SoTT: rec.so_tt || "",
+        Ngay: rec.ngay_dat || "",
+        TrangThai: rec.trang_thai ?? 1
+      };
     }
 
     /* ===== Render ===== */
     function renderTable(rows) {
-      theadEl.innerHTML = ""; tbodyEl.innerHTML = "";
-      if (!rows.length) { btnCsv.disabled = true; countRows.textContent = "0"; showEmpty(true); return; }
+      theadEl.innerHTML = "";
+      tbodyEl.innerHTML = "";
+      if (!rows.length) {
+        btnCsv.disabled = true;
+        countRows.textContent = "0";
+        showEmpty(true);
+        return;
+      }
       showEmpty(false);
 
       const cols = autoColumns(rows);
-      const order = ["MaThe", "HoTen", "NgaySinh", "SoTT", "Ngay", "TrangThai"]; // bỏ UserID, Quay
+      const order = ["MaThe", "HoTen", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
       const finalCols = order.filter(c => cols.includes(c));
 
-      // thead
       const trh = document.createElement("tr");
-      const thIdx = document.createElement("th"); thIdx.textContent = "#"; trh.appendChild(thIdx);
-      finalCols.forEach(c => { const th = document.createElement("th"); th.textContent = COL_LABELS[c] || c; trh.appendChild(th); });
-      const thAct = document.createElement("th"); thAct.textContent = "Hành động"; trh.appendChild(thAct);
+      const thIdx = document.createElement("th");
+      thIdx.textContent = "#";
+      trh.appendChild(thIdx);
+      finalCols.forEach(c => {
+        const th = document.createElement("th");
+        th.textContent = COL_LABELS[c] || c;
+        trh.appendChild(th);
+      });
+      const thAct = document.createElement("th");
+      thAct.textContent = "Hành động";
+      trh.appendChild(thAct);
       theadEl.appendChild(trh);
 
-      // tbody
       rows.forEach((r, i) => {
         const tr = document.createElement("tr");
 
         const tdIndex = document.createElement("td");
-        tdIndex.textContent = i + 1; tdIndex.setAttribute("data-label", "#");
+        tdIndex.textContent = i + 1;
+        tdIndex.setAttribute("data-label", "#");
         tr.appendChild(tdIndex);
 
         finalCols.forEach(c => {
           const td = document.createElement("td");
           td.setAttribute("data-label", COL_LABELS[c] || c);
-          if (c === "TrangThai") td.innerHTML = statusBadge(r[c]);
-          else if (c === "NgaySinh" || c === "Ngay") td.innerHTML = `<span class="nowrap">${toVNDate(r[c])}</span>`;
-          else td.textContent = r[c] ?? "";
+          if (c === "TrangThai") {
+            td.innerHTML = statusBadge(r[c]);
+          } else if (c === "NgaySinh" || c === "Ngay") {
+            td.innerHTML = `<span class="nowrap">${toVNDate(r[c])}</span>`;
+          } else {
+            td.textContent = r[c] ?? "";
+          }
           tr.appendChild(td);
         });
 
@@ -493,10 +557,16 @@
     }
 
     /* ===== Search (chỉ Họ tên + Mã thẻ) ===== */
-    function normalizeVN(s) { return (s || "").toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() }
+    function normalizeVN(s) {
+      return (s || "").toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
     function applySearch() {
       const q = normalizeVN(searchInput.value.trim());
-      if (!q) { viewRows = fullRows.slice(); renderTable(viewRows); return; }
+      if (!q) {
+        viewRows = fullRows.slice();
+        renderTable(viewRows);
+        return;
+      }
       viewRows = fullRows.filter(r => {
         const name = normalizeVN(r.HoTen);
         const card = normalizeVN(r.MaThe);
@@ -504,12 +574,19 @@
       });
       renderTable(viewRows);
     }
-    function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms) } }
+    function debounce(fn, ms) {
+      let t;
+      return (...a) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...a), ms);
+      };
+    }
     const onSearchDebounced = debounce(applySearch, 150);
 
     /* ===== Actions ===== */
     async function confirmRow(row, trEl) {
-      const ok = confirm(`Xác nhận Số TT ${row.SoTT} (Mã thẻ ${row.MaThe})?`); if (!ok) return;
+      const ok = confirm(`Xác nhận Số TT ${row.SoTT} (Mã thẻ ${row.MaThe})?`);
+      if (!ok) return;
 
       const headers = [...document.querySelectorAll("#thead th")].map(th => th.textContent.trim());
       const idxTrangThai = headers.findIndex(h => h === "Trạng thái");
@@ -521,9 +598,11 @@
       cells[cells.length - 1].innerHTML = `<span class="text-secondary">—</span>`;
 
       try {
-        const resp = await updateStatusPOST(row.MaThe, dateInput.value, 2);
-        if (!resp?.ok) throw new Error(resp?.error || resp?.error_code || "Update failed");
-        const idx = fullRows.findIndex(x => x.MaThe === row.MaThe && x.Ngay === row.Ngay);
+        const resp = await updateStatusPATCH(row._id, 2);
+        if (!resp?.success) {
+          throw new Error(resp?.message || "Update failed");
+        }
+        const idx = fullRows.findIndex(x => x._id === row._id);
         if (idx > -1) fullRows[idx].TrangThai = 2;
       } catch (e) {
         row.TrangThai = old;
@@ -533,7 +612,8 @@
           btn.className = "btn btn-success btn-sm";
           btn.innerHTML = `<i class="bi bi-check2-square"></i> <span class="btn-text">Xác nhận</span>`;
           btn.onclick = () => confirmRow(row, trEl);
-          cells[cells.length - 1].innerHTML = ""; cells[cells.length - 1].appendChild(btn);
+          cells[cells.length - 1].innerHTML = "";
+          cells[cells.length - 1].appendChild(btn);
         } else {
           cells[cells.length - 1].innerHTML = `<span class="text-secondary">—</span>`;
         }
@@ -543,22 +623,28 @@
 
     /* ===== Events ===== */
     btnFetch.onclick = async () => {
-      const ngay = dateInput.value; if (!ngay) return alert("Chọn ngày");
+      const ngay = dateInput.value;
+      if (!ngay) return alert("Chọn ngày");
       setLoading(true);
       try {
         const json = await fetchData(ngay);
-        fullRows = Array.isArray(json?.data) ? json.data : [];
+        const arr = Array.isArray(json?.data) ? json.data : (Array.isArray(json) ? json : []);
+        fullRows = arr.map(mapRecordToRow);
         viewRows = fullRows.slice();
         renderTable(viewRows);
         statusText.textContent = "Hoàn tất ✓";
         applySearch();
       } catch (e) {
-        fullRows = []; viewRows = [];
+        fullRows = [];
+        viewRows = [];
         renderTable(viewRows);
         statusText.textContent = "Lỗi";
         alert("Không lấy được dữ liệu: " + (e.message || e));
-      } finally { setLoading(false) }
+      } finally {
+        setLoading(false);
+      }
     };
+
     searchInput.addEventListener("input", onSearchDebounced);
 
     btnCsv.onclick = () => {
@@ -566,22 +652,34 @@
       const cols = autoColumns(viewRows);
       const order = ["MaThe", "HoTen", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
       const finalCols = order.filter(c => cols.includes(c));
-      const esc = s => { s = s == null ? "" : String(s); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s };
+      const esc = s => {
+        s = s == null ? "" : String(s);
+        return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+      };
       const head = ["STT", ...finalCols.map(c => COL_LABELS[c] || c)].join(",");
       const body = viewRows.map((r, i) => {
         const values = finalCols.map(c => {
-          if (c === "TrangThai") { const x = Number(r[c]); return x === 0 ? "Đã hủy" : x === 1 ? "Chờ xác nhận" : x === 2 ? "Đã xác nhận" : "" }
+          if (c === "TrangThai") {
+            const x = Number(r[c]);
+            return x === 0 ? "Đã hủy" : x === 1 ? "Chờ xác nhận" : x === 2 ? "Đã xác nhận" : "";
+          }
           if (c === "NgaySinh" || c === "Ngay") return toVNDate(r[c]);
           return r[c];
         });
         return [i + 1, ...values.map(esc)].join(",");
       }).join("\n");
       const blob = new Blob(["\uFEFF" + head + "\n" + body], { type: "text/csv;charset=utf-8" });
-      const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `data_${dateInput.value}.csv`; a.click();
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `data_${dateInput.value}.csv`;
+      a.click();
     };
 
     btnTop.onclick = () => document.querySelector(".table-wrap").scrollTo({ top: 0, behavior: "smooth" });
-    btnBottom.onclick = () => { const w = document.querySelector(".table-wrap"); w.scrollTo({ top: w.scrollHeight, behavior: "smooth" }) };
+    btnBottom.onclick = () => {
+      const w = document.querySelector(".table-wrap");
+      w.scrollTo({ top: w.scrollHeight, behavior: "smooth" });
+    };
   </script>
 </body>
 
