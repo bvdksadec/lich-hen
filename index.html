@@ -247,7 +247,7 @@
 
       .table-responsive-cards tbody tr {
         display: block;
-        margin: 10px 10px;
+        margin: 10px 0; /* 👈 full width, không chừa 2 bên */
         border: 1px solid var(--border);
         border-radius: 12px;
         background: #fff;
@@ -263,7 +263,8 @@
         grid-template-columns: 120px 1fr;
         gap: 8px;
         padding: .6rem .75rem;
-        border: 0 !important
+        border: 0 !important;
+        word-break: break-word; /* triệu chứng dài sẽ xuống dòng */
       }
 
       .table-responsive-cards tbody td::before {
@@ -347,13 +348,13 @@
 
       <!-- Footer -->
       <div class="footerbar mt-3">
-        <div class="small text-secondary"><i class="bi bi-info-circle me-1"></i>Bấm “Xác nhận” với dòng trạng thái
-          <b>Chờ xác nhận</b>.
+        <div class="small text-secondary">
+          <i class="bi bi-info-circle me-1"></i>
+          Bấm “Xác nhận” với dòng trạng thái <b>Chờ xác nhận</b>.
         </div>
         <div class="d-flex gap-2">
           <button id="btnTop" class="btn btn-soft btn-sm btn-pill"><i class="bi bi-arrow-up"></i> Lên đầu</button>
-          <button id="btnBottom" class="btn btn-soft btn-sm btn-pill"><i class="bi bi-arrow-down"></i> Cuối
-            bảng</button>
+          <button id="btnBottom" class="btn btn-soft btn-sm btn-pill"><i class="bi bi-arrow-down"></i> Cuối bảng</button>
         </div>
       </div>
     </div>
@@ -390,12 +391,15 @@
       progress.classList.toggle("d-none", !on);
       statusText.textContent = on ? "Đang tải…" : "Sẵn sàng";
     }
+
     function showEmpty(show) { emptyEl.classList.toggle("d-none", !show); }
+
     function autoColumns(rows) {
       const k = new Set();
       rows.forEach(r => Object.keys(r || {}).forEach(x => k.add(x)));
       return [...k];
     }
+
     function toVNDate(s) {
       if (!s) return "";
       try {
@@ -417,6 +421,8 @@
     const COL_LABELS = {
       MaThe: "Mã thẻ",
       HoTen: "Họ tên",
+      DichVu: "Dịch vụ",
+      TrieuChung: "Triệu chứng",
       NgaySinh: "Ngày sinh",
       SoTT: "Số TT",
       Ngay: "Ngày",
@@ -460,7 +466,6 @@
 
     // GET /dat-lich/ngay/{ngay_dat}
     async function fetchData(ngay) {
-      // ngay dạng YYYY-MM-DD từ input date
       const url = `${API_BASE}/dat-lich/ngay/${encodeURIComponent(ngay)}`;
       return apiGet(url);
     }
@@ -477,6 +482,8 @@
         _id: rec.id,                             // dùng cho PATCH
         MaThe: rec.ma_the || "",
         HoTen: rec.ho_ten || "",
+        DichVu: rec.dich_vu || "",
+        TrieuChung: rec.trieu_chung || "",
         NgaySinh: rec.ngay_sinh || "",
         SoTT: rec.so_tt || "",
         Ngay: rec.ngay_dat || "",
@@ -489,6 +496,7 @@
       theadEl.innerHTML = "";
       tbodyEl.innerHTML = "";
       if (!rows.length) {
+        btnCsv.disabled = false; // vẫn cho export rỗng? thôi disable:
         btnCsv.disabled = true;
         countRows.textContent = "0";
         showEmpty(true);
@@ -497,7 +505,8 @@
       showEmpty(false);
 
       const cols = autoColumns(rows);
-      const order = ["MaThe", "HoTen", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
+      // Thứ tự cột mong muốn
+      const order = ["MaThe", "HoTen", "DichVu", "TrieuChung", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
       const finalCols = order.filter(c => cols.includes(c));
 
       const trh = document.createElement("tr");
@@ -525,6 +534,7 @@
         finalCols.forEach(c => {
           const td = document.createElement("td");
           td.setAttribute("data-label", COL_LABELS[c] || c);
+
           if (c === "TrangThai") {
             td.innerHTML = statusBadge(r[c]);
           } else if (c === "NgaySinh" || c === "Ngay") {
@@ -556,10 +566,11 @@
       countRows.textContent = rows.length.toLocaleString("vi-VN");
     }
 
-    /* ===== Search (chỉ Họ tên + Mã thẻ) ===== */
+    /* ===== Search (Họ tên + Mã thẻ) ===== */
     function normalizeVN(s) {
       return (s || "").toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
+
     function applySearch() {
       const q = normalizeVN(searchInput.value.trim());
       if (!q) {
@@ -574,6 +585,7 @@
       });
       renderTable(viewRows);
     }
+
     function debounce(fn, ms) {
       let t;
       return (...a) => {
@@ -650,7 +662,7 @@
     btnCsv.onclick = () => {
       if (!viewRows.length) return;
       const cols = autoColumns(viewRows);
-      const order = ["MaThe", "HoTen", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
+      const order = ["MaThe", "HoTen", "DichVu", "TrieuChung", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
       const finalCols = order.filter(c => cols.includes(c));
       const esc = s => {
         s = s == null ? "" : String(s);
