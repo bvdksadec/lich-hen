@@ -30,17 +30,22 @@
     body {
       height: 100%;
       background: var(--bg);
-      color: var(--text)
+      color: var(--text);
     }
 
     body {
-      font-family: system-ui, Roboto, Segoe UI
+      font-family: system-ui, Roboto, Segoe UI;
+      font-size: 16px;
+    }
+
+    .container-xl {
+      max-width: 90vw;
     }
 
     .nav-hero {
       background: linear-gradient(135deg, #064eb9, #2f77ce);
       box-shadow: 0 5px 20px #0044aa66;
-      color: #fff
+      color: #fff;
     }
 
     .app-card {
@@ -58,35 +63,36 @@
       align-items: center;
       gap: .45rem;
       background: #0e5bce;
-      color: #fff
+      color: #fff;
     }
 
     .btn {
-      border-radius: 999px
+      border-radius: 999px;
     }
 
     .btn-soft {
       background: var(--brand-light);
       border: 1px solid var(--border);
-      color: var(--brand)
+      color: var(--brand);
     }
 
     .btn-soft:hover {
-      background: #d6e7ff
+      background: #d6e7ff;
     }
 
     .toolbar .form-control {
-      height: 42px
+      height: 42px;
     }
 
     input.form-control {
       border-radius: 12px;
       border: 1px solid var(--border);
-      background: #fff
+      background: #fff;
     }
 
     .search-input {
-      max-width: 340px
+      max-width: 340px;
+      margin-left: auto;
     }
 
     .table-wrap {
@@ -94,11 +100,13 @@
       max-height: 450px;
       background: #fff;
       border: 1px solid var(--border);
-      border-radius: 14px
+      border-radius: 16px;
     }
 
     table {
-      color: var(--text)
+      color: var(--text);
+      width: 100%;
+      table-layout: fixed;
     }
 
     thead th {
@@ -109,54 +117,81 @@
       border-bottom: 1px solid var(--thead-border) !important;
       color: #fff !important;
       font-weight: 700;
-      letter-spacing: .2px
+      letter-spacing: .2px;
+      white-space: nowrap;
     }
 
     tbody tr:hover {
-      background: var(--row-hover)
+      background: var(--row-hover);
     }
 
     th,
     td {
-      vertical-align: middle
+      vertical-align: middle;
     }
 
     .table td,
     .table th {
-      padding: .55rem .75rem
+      padding: .55rem .75rem;
     }
 
     td.nowrap {
-      white-space: nowrap
+      white-space: nowrap;
+    }
+
+    .table th.col-idx,
+    .table td.col-idx {
+      width: 40px;
+      text-align: center;
+    }
+
+    .table th.col-sott,
+    .table td.col-sott {
+      width: 70px;
+      text-align: center;
+    }
+
+    .table th.col-hotten,
+    .table td.col-hotten {
+      width: 220px;
+    }
+
+    .symptom-cell {
+      white-space: normal;
+      word-break: break-word;
+      font-size: 16px;
+      line-height: 1.35;
     }
 
     .badge-status {
       border-radius: 999px;
-      padding: .35rem .6rem;
+      padding: .25rem .6rem;
       border: 1px solid transparent;
-      font-weight: 600
+      font-weight: 600;
+      white-space: nowrap;
+      font-size: 16px;
     }
 
     .badge-wait {
       background: #fff3d9;
       color: #9a6a00;
-      border-color: #ffdf97
+      border-color: #ffdf97;
     }
 
     .badge-ok {
       background: #e6f7ed;
       color: #0f6c3f;
-      border-color: #c6ead5
+      border-color: #c6ead5;
     }
 
     .badge-cancel {
       background: #ffeef0;
       color: #a5162a;
-      border-color: #ffd6db
+      border-color: #ffd6db;
     }
 
     .status {
-      color: var(--muted)
+      color: var(--muted);
     }
 
     .count-chip {
@@ -165,14 +200,14 @@
       color: #0a3a92;
       border: 1px solid #c9dbff;
       border-radius: 10px;
-      padding: .35rem .65rem
+      padding: .35rem .65rem;
     }
 
     .progressbar {
       height: 3px;
       background: #dce8ff;
       border-radius: 20px;
-      overflow: hidden
+      overflow: hidden;
     }
 
     .progressbar>span {
@@ -180,16 +215,16 @@
       width: 35%;
       height: 100%;
       background: linear-gradient(90deg, #6bb6ff, #0d6efd, #6bb6ff);
-      animation: indet 1.2s infinite linear
+      animation: indet 1.2s infinite linear;
     }
 
     @keyframes indet {
       0% {
-        margin-left: -35%
+        margin-left: -35%;
       }
 
       100% {
-        margin-left: 100%
+        margin-left: 100%;
       }
     }
 
@@ -201,61 +236,69 @@
       padding: 10px 14px;
       border-top: 1px solid var(--border);
       background: #fafcffb8;
-      border-radius: 12px
+      border-radius: 12px;
     }
 
-    /* ===== Toolbar phải: 4 item trên cùng một dòng (kể cả mobile) ===== */
     .toolbar-right {
       display: flex;
       align-items: center;
-      gap: 8px
+      gap: 8px;
+      flex-wrap: nowrap;
     }
 
     @media (max-width:576px) {
       .toolbar-right {
-        flex-wrap: nowrap;
         overflow-x: auto;
-        white-space: nowrap
+        white-space: nowrap;
       }
 
       .toolbar-right .btn {
-        padding: 8px 10px
+        padding: 8px 10px;
       }
 
       .toolbar-right .btn .btn-text {
-        display: none
+        display: none;
       }
 
       .toolbar-right .count-chip {
-        flex: 0 0 auto
+        flex: 0 0 auto;
+      }
+
+      .badge-status {
+        font-size: 14px;
+        padding: .2rem .45rem;
+      }
+
+      .search-input {
+        max-width: 100%;
+        margin-left: 0;
       }
     }
 
-    /* ===== Table -> Card dọc trên mobile ===== */
     .table-responsive-cards thead {
-      display: table-header-group
+      display: table-header-group;
     }
 
     @media (max-width:768px) {
       .table-responsive-cards thead {
-        display: none
+        display: none;
       }
 
       .table-responsive-cards tbody {
-        display: block
+        display: block;
       }
 
       .table-responsive-cards tbody tr {
         display: block;
-        margin: 10px 0; /* 👈 full width, không chừa 2 bên */
+        margin: 10px 10px;
         border: 1px solid var(--border);
         border-radius: 12px;
         background: #fff;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, .04)
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .04);
       }
 
       .table-responsive-cards tbody tr:nth-child(even) {
-        background: #fff
+        background: #fff;
       }
 
       .table-responsive-cards tbody td {
@@ -264,24 +307,138 @@
         gap: 8px;
         padding: .6rem .75rem;
         border: 0 !important;
-        word-break: break-word; /* triệu chứng dài sẽ xuống dòng */
+        white-space: normal;
       }
 
       .table-responsive-cards tbody td::before {
         content: attr(data-label);
         font-weight: 600;
-        color: #0a2a66
+        color: #0a2a66;
       }
 
       .table-responsive-cards tbody td.actions {
         grid-template-columns: 120px auto;
-        align-items: center
+        align-items: center;
       }
 
       .table-responsive-cards tbody td.actions .btn {
         width: auto;
         display: inline-flex;
-        justify-content: center
+        justify-content: center;
+      }
+    }
+
+    /* ===== Modal kiểu SweetAlert – chỉnh theo yêu cầu ===== */
+    #confirmModal .modal-dialog {
+      max-width: 430px;
+    }
+
+    .modal-content.confirm-modal {
+      border-radius: 20px;
+      border: 1px solid #d7e3ff;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.35);
+      padding: 24px 26px 20px;
+      text-align: center;
+      background:
+        radial-gradient(circle at top, #eff4ff 0, #ffffff 55%),
+        radial-gradient(circle at bottom, #e0edff 0, #ffffff 45%);
+    }
+
+    .swal-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 3px solid #c7ddff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #e3edff);
+      /* shadow nhẹ hơn */
+      box-shadow:
+        0 0 0 4px rgba(191, 219, 254, 0.4),
+        0 8px 18px rgba(37, 99, 235, 0.25);
+      color: #0e5bce;
+      font-size: 30px;
+    }
+
+    .swal-title {
+      font-size: 22px;
+      font-weight: 750;
+      margin-bottom: 8px;
+      color: #0e5bce; /* tiêu đề có màu */
+    }
+
+    .swal-patient {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .swal-detail {
+      font-size: 16px;
+      color: #374151;
+      margin-bottom: 10px;
+    }
+
+    .swal-hint {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .swal-hint b {
+      color: #0e5bce;
+    }
+
+    .swal-buttons {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .swal-buttons .btn {
+      min-width: 120px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center; /* chữ căn giữa */
+    }
+
+    .swal-buttons .btn-cancel {
+      background: #e5e7eb;
+      color: #374151;
+      border: none;
+    }
+
+    .swal-buttons .btn-cancel:hover {
+      background: #d1d5db;
+    }
+
+    .swal-buttons .btn-confirm {
+      background: #0e5bce;
+      border: none;
+      color: #fff;
+    }
+
+    .swal-buttons .btn-confirm:hover {
+      background: #0b4aa8;
+    }
+
+    @media (max-width: 576px) {
+      .modal-content.confirm-modal {
+        padding: 20px 14px 16px;
+      }
+
+      .swal-buttons {
+        flex-direction: column-reverse;
+      }
+
+      .swal-buttons .btn {
+        width: 100%;
       }
     }
   </style>
@@ -305,20 +462,12 @@
     <div class="app-card p-3 p-md-4">
       <!-- Toolbar -->
       <div class="d-flex flex-column flex-lg-row align-items-lg-center toolbar" style="gap:12px">
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center gap-2 flex-shrink-0">
           <span class="text-secondary"><i class="bi bi-calendar-date fs-5 text-primary"></i></span>
           <input id="dateInput" type="date" class="form-control" style="width:220px">
         </div>
 
-        <div class="ms-lg-3 flex-grow-1">
-          <div class="input-group search-input mt-2 mt-lg-0">
-            <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
-            <input id="searchInput" type="text" class="form-control" placeholder="Tìm theo tên hoặc mã thẻ...">
-          </div>
-        </div>
-
-        <!-- 4 mục cùng một dòng -->
-        <div class="ms-lg-auto d-flex align-items-center gap-2 mt-2 mt-lg-0 toolbar-right">
+        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0 flex-shrink-0 toolbar-right">
           <button id="btnFetch" class="btn btn-pill">
             <i class="bi bi-download"></i><span class="btn-text"> Lấy dữ liệu</span>
           </button>
@@ -326,27 +475,34 @@
             <i class="bi bi-file-earmark-spreadsheet"></i><span class="btn-text"> Tải CSV</span>
           </button>
 
-          <span class="status small">
+          <span class="status small d-flex align-items-center">
             <i class="bi bi-activity me-1"></i><span id="statusText">Sẵn sàng</span>
           </span>
           <span class="count-chip">
             <i class="bi bi-table me-1"></i><span id="countRows">0</span> dòng
           </span>
         </div>
+
+        <div class="mt-2 mt-lg-0 flex-grow-1">
+          <div class="input-group search-input">
+            <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+            <input id="searchInput" type="text" class="form-control" placeholder="Tìm theo tên hoặc mã thẻ...">
+          </div>
+        </div>
       </div>
 
       <div id="progress" class="progressbar mt-3 d-none"><span></span></div>
 
-      <!-- Table -->
       <div class="table-wrap mt-3">
         <table class="table table-sm table-striped align-middle mb-0 table-responsive-cards">
           <thead id="thead"></thead>
           <tbody id="tbody"></tbody>
         </table>
-        <div id="empty" class="text-center text-secondary py-4 d-none">📂 Chưa có dữ liệu cho ngày đã chọn.</div>
+        <div id="empty" class="text-center text-secondary py-4 d-none">
+          📂 Chưa có dữ liệu cho ngày đã chọn.
+        </div>
       </div>
 
-      <!-- Footer -->
       <div class="footerbar mt-3">
         <div class="small text-secondary">
           <i class="bi bi-info-circle me-1"></i>
@@ -360,11 +516,40 @@
     </div>
   </div>
 
+  <!-- MODAL XÁC NHẬN -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content confirm-modal">
+        <div class="swal-icon">
+          <i class="bi bi-check2"></i>
+        </div>
+        <div class="swal-title">Xác nhận lịch khám?</div>
+
+        <!-- ĐÃ BỎ DÒNG mô tả “Bạn sắp xác nhận lịch khám cho bệnh nhân…” -->
+        <div class="swal-patient" id="confirmPatientName"></div>
+        <div class="swal-detail" id="confirmText"></div>
+        <div class="swal-hint">
+          Sau khi xác nhận, lịch sẽ chuyển sang trạng thái <b>Đã xác nhận</b>.
+        </div>
+
+        <div class="swal-buttons">
+          <button type="button" class="btn btn-cancel btn-pill" data-bs-dismiss="modal">
+            Hủy
+          </button>
+          <button type="button" class="btn btn-confirm btn-pill" id="confirmOkBtn">
+            Xác nhận
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
   <script>
-    /* ==== CẤU HÌNH API LARAVEL ==== */
     const API_BASE = "https://quoc.shop/public/api";
     const SECRET_KEY = "BVDKSADEC@2025";
-    /* ============================== */
 
     const dateInput = document.getElementById("dateInput");
     const searchInput = document.getElementById("searchInput");
@@ -379,24 +564,43 @@
     const btnTop = document.getElementById("btnTop");
     const btnBottom = document.getElementById("btnBottom");
 
+    const confirmTextEl = document.getElementById("confirmText");
+    const confirmPatientNameEl = document.getElementById("confirmPatientName");
+    const confirmOkBtn = document.getElementById("confirmOkBtn");
+    let confirmModal;
+    let pendingRow = null;
+    let pendingTr = null;
+
     let fullRows = [];
     let viewRows = [];
 
-    // hôm nay + tự fetch khi mở
     dateInput.value = new Date().toISOString().slice(0, 10);
-    window.addEventListener("DOMContentLoaded", () => btnFetch.click());
 
-    /* ===== Helpers ===== */
+    window.addEventListener("DOMContentLoaded", () => {
+      const modalEl = document.getElementById("confirmModal");
+      if (modalEl) {
+        confirmModal = new bootstrap.Modal(modalEl);
+      }
+      btnFetch.click();
+    });
+
+    dateInput.addEventListener("change", () => {
+      if (dateInput.value) {
+        btnFetch.click();
+      }
+    });
+
     function setLoading(on) {
       progress.classList.toggle("d-none", !on);
       statusText.textContent = on ? "Đang tải…" : "Sẵn sàng";
     }
-
     function showEmpty(show) { emptyEl.classList.toggle("d-none", !show); }
 
     function autoColumns(rows) {
       const k = new Set();
-      rows.forEach(r => Object.keys(r || {}).forEach(x => k.add(x)));
+      rows.forEach(r => {
+        Object.keys(r || {}).forEach(x => k.add(x));
+      });
       return [...k];
     }
 
@@ -437,7 +641,20 @@
       return `<span class="badge bg-secondary">N/A</span>`;
     }
 
-    /* ===== API LARAVEL ===== */
+    const BASE_COL_ORDER = ["MaThe", "HoTen", "DichVu", "TrieuChung", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
+
+    function getFinalColumns(rows) {
+      const cols = autoColumns(rows);
+      const base = BASE_COL_ORDER;
+      const extras = cols.filter(
+        (c) => !base.includes(c) && !String(c).startsWith("_")
+      );
+      return [
+        ...base.filter((c) => cols.includes(c)),
+        ...extras.sort()
+      ];
+    }
+
     async function apiGet(url) {
       const res = await fetch(url, {
         method: "GET",
@@ -464,22 +681,19 @@
       return res.json();
     }
 
-    // GET /dat-lich/ngay/{ngay_dat}
     async function fetchData(ngay) {
       const url = `${API_BASE}/dat-lich/ngay/${encodeURIComponent(ngay)}`;
       return apiGet(url);
     }
 
-    // PATCH /dat-lich/{id}/status
     async function updateStatusPATCH(id, trangThai) {
       const url = `${API_BASE}/dat-lich/${id}/status`;
       return apiPatch(url, { trang_thai: trangThai });
     }
 
-    // Map record Laravel -> object UI
     function mapRecordToRow(rec) {
       return {
-        _id: rec.id,                             // dùng cho PATCH
+        _id: rec.id,
         MaThe: rec.ma_the || "",
         HoTen: rec.ho_ten || "",
         DichVu: rec.dich_vu || "",
@@ -491,12 +705,11 @@
       };
     }
 
-    /* ===== Render ===== */
     function renderTable(rows) {
       theadEl.innerHTML = "";
       tbodyEl.innerHTML = "";
-      if (!rows.length) {
-        btnCsv.disabled = false; // vẫn cho export rỗng? thôi disable:
+
+      if (!rows || !rows.length) {
         btnCsv.disabled = true;
         countRows.textContent = "0";
         showEmpty(true);
@@ -504,23 +717,27 @@
       }
       showEmpty(false);
 
-      const cols = autoColumns(rows);
-      // Thứ tự cột mong muốn
-      const order = ["MaThe", "HoTen", "DichVu", "TrieuChung", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
-      const finalCols = order.filter(c => cols.includes(c));
+      const finalCols = getFinalColumns(rows);
 
       const trh = document.createElement("tr");
+
       const thIdx = document.createElement("th");
       thIdx.textContent = "#";
+      thIdx.classList.add("col-idx");
       trh.appendChild(thIdx);
-      finalCols.forEach(c => {
+
+      finalCols.forEach((c) => {
         const th = document.createElement("th");
         th.textContent = COL_LABELS[c] || c;
+        if (c === "HoTen") th.classList.add("col-hotten");
+        if (c === "SoTT") th.classList.add("col-sott");
         trh.appendChild(th);
       });
+
       const thAct = document.createElement("th");
       thAct.textContent = "Hành động";
       trh.appendChild(thAct);
+
       theadEl.appendChild(trh);
 
       rows.forEach((r, i) => {
@@ -529,19 +746,27 @@
         const tdIndex = document.createElement("td");
         tdIndex.textContent = i + 1;
         tdIndex.setAttribute("data-label", "#");
+        tdIndex.classList.add("col-idx");
         tr.appendChild(tdIndex);
 
-        finalCols.forEach(c => {
+        finalCols.forEach((c) => {
           const td = document.createElement("td");
           td.setAttribute("data-label", COL_LABELS[c] || c);
+
+          if (c === "HoTen") td.classList.add("col-hotten");
+          if (c === "SoTT") td.classList.add("col-sott");
 
           if (c === "TrangThai") {
             td.innerHTML = statusBadge(r[c]);
           } else if (c === "NgaySinh" || c === "Ngay") {
             td.innerHTML = `<span class="nowrap">${toVNDate(r[c])}</span>`;
+          } else if (c === "TrieuChung") {
+            td.classList.add("symptom-cell");
+            td.textContent = r[c] ?? "";
           } else {
             td.textContent = r[c] ?? "";
           }
+
           tr.appendChild(td);
         });
 
@@ -550,7 +775,7 @@
         tdAct.setAttribute("data-label", "Hành động");
         if (Number(r.TrangThai) === 1) {
           const btn = document.createElement("button");
-          btn.className = "btn btn-success btn-sm";
+          btn.className = "btn btn-success";
           btn.innerHTML = `<i class="bi bi-check2-square"></i> <span class="btn-text">Xác nhận</span>`;
           btn.onclick = () => confirmRow(r, tr);
           tdAct.appendChild(btn);
@@ -566,11 +791,9 @@
       countRows.textContent = rows.length.toLocaleString("vi-VN");
     }
 
-    /* ===== Search (Họ tên + Mã thẻ) ===== */
     function normalizeVN(s) {
       return (s || "").toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
-
     function applySearch() {
       const q = normalizeVN(searchInput.value.trim());
       if (!q) {
@@ -585,7 +808,6 @@
       });
       renderTable(viewRows);
     }
-
     function debounce(fn, ms) {
       let t;
       return (...a) => {
@@ -595,11 +817,7 @@
     }
     const onSearchDebounced = debounce(applySearch, 150);
 
-    /* ===== Actions ===== */
-    async function confirmRow(row, trEl) {
-      const ok = confirm(`Xác nhận Số TT ${row.SoTT} (Mã thẻ ${row.MaThe})?`);
-      if (!ok) return;
-
+    async function doConfirmRow(row, trEl) {
       const headers = [...document.querySelectorAll("#thead th")].map(th => th.textContent.trim());
       const idxTrangThai = headers.findIndex(h => h === "Trạng thái");
       const cells = trEl.querySelectorAll("td");
@@ -633,7 +851,36 @@
       }
     }
 
-    /* ===== Events ===== */
+    function confirmRow(row, trEl) {
+      pendingRow = row;
+      pendingTr = trEl;
+
+      if (confirmPatientNameEl) {
+        confirmPatientNameEl.textContent = row.HoTen || "(Chưa có tên)";
+      }
+      if (confirmTextEl) {
+        confirmTextEl.textContent = `Số TT ${row.SoTT || ""} - Mã thẻ ${row.MaThe || ""}.`;
+      }
+
+      if (confirmModal) {
+        confirmModal.show();
+      } else {
+        if (window.confirm(`Xác nhận Số TT ${row.SoTT} (Mã thẻ ${row.MaThe})?`)) {
+          doConfirmRow(row, trEl);
+        }
+      }
+    }
+
+    if (confirmOkBtn) {
+      confirmOkBtn.addEventListener("click", async () => {
+        if (!pendingRow || !pendingTr) return;
+        await doConfirmRow(pendingRow, pendingTr);
+        if (confirmModal) confirmModal.hide();
+        pendingRow = null;
+        pendingTr = null;
+      });
+    }
+
     btnFetch.onclick = async () => {
       const ngay = dateInput.value;
       if (!ngay) return alert("Chọn ngày");
@@ -660,27 +907,40 @@
     searchInput.addEventListener("input", onSearchDebounced);
 
     btnCsv.onclick = () => {
-      if (!viewRows.length) return;
-      const cols = autoColumns(viewRows);
-      const order = ["MaThe", "HoTen", "DichVu", "TrieuChung", "NgaySinh", "SoTT", "Ngay", "TrangThai"];
-      const finalCols = order.filter(c => cols.includes(c));
-      const esc = s => {
+      if (!viewRows || !viewRows.length) return;
+
+      const finalCols = getFinalColumns(viewRows);
+
+      const esc = (s) => {
         s = s == null ? "" : String(s);
         return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
       };
-      const head = ["STT", ...finalCols.map(c => COL_LABELS[c] || c)].join(",");
-      const body = viewRows.map((r, i) => {
-        const values = finalCols.map(c => {
-          if (c === "TrangThai") {
-            const x = Number(r[c]);
-            return x === 0 ? "Đã hủy" : x === 1 ? "Chờ xác nhận" : x === 2 ? "Đã xác nhận" : "";
-          }
-          if (c === "NgaySinh" || c === "Ngay") return toVNDate(r[c]);
-          return r[c];
-        });
-        return [i + 1, ...values.map(esc)].join(",");
-      }).join("\n");
-      const blob = new Blob(["\uFEFF" + head + "\n" + body], { type: "text/csv;charset=utf-8" });
+
+      const head = ["STT", ...finalCols.map((c) => COL_LABELS[c] || c)].join(",");
+
+      const body = viewRows
+        .map((r, i) => {
+          const values = finalCols.map((c) => {
+            if (c === "TrangThai") {
+              const x = Number(r[c]);
+              return x === 0
+                ? "Đã hủy"
+                : x === 1
+                  ? "Chờ xác nhận"
+                  : x === 2
+                    ? "Đã xác nhận"
+                    : "";
+            }
+            if (c === "NgaySinh" || c === "Ngay") return toVNDate(r[c]);
+            return r[c] ?? "";
+          });
+          return [i + 1, ...values.map(esc)].join(",");
+        })
+        .join("\n");
+
+      const blob = new Blob(["\uFEFF" + head + "\n" + body], {
+        type: "text/csv;charset=utf-8",
+      });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = `data_${dateInput.value}.csv`;
